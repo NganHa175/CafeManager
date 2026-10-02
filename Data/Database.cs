@@ -60,7 +60,11 @@ namespace CafeManagement.Data
                 );
             ";
             cmd.ExecuteNonQuery();
+
             SeedDefaultAdmin();
+            SeedDefaultStaff();
+            SeedDefaultTables();
+            SeedDefaultMenuItems();
         }
 
         private static void SeedDefaultAdmin()
@@ -75,6 +79,76 @@ namespace CafeManagement.Data
                 insert.CommandText = @"
                     INSERT INTO Users (Username, Password, Role, FullName)
                     VALUES ('admin', 'admin123', 'Admin', 'Administrator')
+                ";
+                insert.ExecuteNonQuery();
+            }
+        }
+
+        private static void SeedDefaultStaff()
+        {
+            var check = Connection.CreateCommand();
+            check.CommandText = "SELECT COUNT(*) FROM Users WHERE Username = 'staff'";
+            var count = (long)(check.ExecuteScalar() ?? 0);
+
+            if (count == 0)
+            {
+                var insert = Connection.CreateCommand();
+                insert.CommandText = @"
+                    INSERT INTO Users (Username, Password, Role, FullName)
+                    VALUES ('staff', 'staff123', 'Staff', 'Staff Member')
+                ";
+                insert.ExecuteNonQuery();
+            }
+        }
+
+        private static void SeedDefaultTables()
+        {
+            var check = Connection.CreateCommand();
+            check.CommandText = "SELECT COUNT(*) FROM CafeTables";
+            var count = (long)(check.ExecuteScalar() ?? 0);
+
+            if (count == 0)
+            {
+                var insert = Connection.CreateCommand();
+                insert.CommandText = @"
+                    INSERT INTO CafeTables (TableName, Status) VALUES ('Table 1', 'Empty');
+                    INSERT INTO CafeTables (TableName, Status) VALUES ('Table 2', 'Empty');
+                    INSERT INTO CafeTables (TableName, Status) VALUES ('Table 3', 'Empty');
+                    INSERT INTO CafeTables (TableName, Status) VALUES ('Table 4', 'Empty');
+                    INSERT INTO CafeTables (TableName, Status) VALUES ('Table 5', 'Empty');
+                    INSERT INTO CafeTables (TableName, Status) VALUES ('Table 6', 'Empty');
+                    INSERT INTO CafeTables (TableName, Status) VALUES ('Table 7', 'Empty');
+                    INSERT INTO CafeTables (TableName, Status) VALUES ('Table 8', 'Empty');
+                ";
+                insert.ExecuteNonQuery();
+            }
+        }
+
+        private static void SeedDefaultMenuItems()
+        {
+            var check = Connection.CreateCommand();
+            check.CommandText = "SELECT COUNT(*) FROM MenuItems";
+            var count = (long)(check.ExecuteScalar() ?? 0);
+
+            if (count == 0)
+            {
+                var insert = Connection.CreateCommand();
+                insert.CommandText = @"
+                    INSERT INTO MenuItems (Name, Price, Category, IsAvailable) VALUES ('Black Coffee',    25000, 'Coffee',    1);
+                    INSERT INTO MenuItems (Name, Price, Category, IsAvailable) VALUES ('Milk Coffee',     30000, 'Coffee',    1);
+                    INSERT INTO MenuItems (Name, Price, Category, IsAvailable) VALUES ('Cappuccino',      45000, 'Coffee',    1);
+                    INSERT INTO MenuItems (Name, Price, Category, IsAvailable) VALUES ('Latte',           45000, 'Coffee',    1);
+                    INSERT INTO MenuItems (Name, Price, Category, IsAvailable) VALUES ('Americano',       40000, 'Coffee',    1);
+                    INSERT INTO MenuItems (Name, Price, Category, IsAvailable) VALUES ('Green Tea',       30000, 'Tea',       1);
+                    INSERT INTO MenuItems (Name, Price, Category, IsAvailable) VALUES ('Milk Tea',        45000, 'Tea',       1);
+                    INSERT INTO MenuItems (Name, Price, Category, IsAvailable) VALUES ('Peach Tea',       40000, 'Tea',       1);
+                    INSERT INTO MenuItems (Name, Price, Category, IsAvailable) VALUES ('Mango Smoothie',  50000, 'Smoothie',  1);
+                    INSERT INTO MenuItems (Name, Price, Category, IsAvailable) VALUES ('Strawberry Smoothie', 50000, 'Smoothie', 1);
+                    INSERT INTO MenuItems (Name, Price, Category, IsAvailable) VALUES ('Orange Juice',    40000, 'Juice',     1);
+                    INSERT INTO MenuItems (Name, Price, Category, IsAvailable) VALUES ('Watermelon Juice',35000, 'Juice',     1);
+                    INSERT INTO MenuItems (Name, Price, Category, IsAvailable) VALUES ('Croissant',       35000, 'Food',      1);
+                    INSERT INTO MenuItems (Name, Price, Category, IsAvailable) VALUES ('Cheesecake',      55000, 'Food',      1);
+                    INSERT INTO MenuItems (Name, Price, Category, IsAvailable) VALUES ('Tiramisu',        60000, 'Food',      1);
                 ";
                 insert.ExecuteNonQuery();
             }
