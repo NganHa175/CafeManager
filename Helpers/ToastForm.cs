@@ -1,68 +1,88 @@
 ﻿namespace CafeManagement.Helpers
 {
-    public class ToastForm : Form
+    public static class ToastForm
     {
-        private Label lblMessage;
-        private System.Windows.Forms.Timer timer;
-
-        // Màu theo loại thông báo
-        public enum ToastType { Info, Success, Warning, Error }
-
-        private ToastForm(string message, ToastType type, int durationMs)
+        public static void Show(string message, string title = "Notice", int seconds = 3)
         {
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.StartPosition = FormStartPosition.CenterScreen;
-            this.ClientSize = new Size(340, 80);
-            this.TopMost = true;
-
-            // Màu nền theo loại
-            this.BackColor = type switch
+            var form = new Form
             {
-                ToastType.Success => Color.FromArgb(101, 67, 33),  // brown
-                ToastType.Warning => Color.FromArgb(200, 140, 30), // orange
-                ToastType.Error => Color.FromArgb(180, 40, 40),  // red
-                _ => Color.FromArgb(80, 50, 20),   // dark brown (info)
+                Text = title,
+                ClientSize = new Size(320, 130),
+                StartPosition = FormStartPosition.CenterScreen,
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                MaximizeBox = false,
+                MinimizeBox = false,
+                TopMost = true,
             };
 
-            lblMessage = new Label
+            var picIcon = new PictureBox
+            {
+                Image = SystemIcons.Information.ToBitmap(),
+                Location = new Point(20, 30),
+                Size = new Size(32, 32),
+            };
+
+            var lblMessage = new Label
             {
                 Text = message,
-                ForeColor = Color.White,
-                Font = new Font("Segoe UI", 11, FontStyle.Bold),
-                TextAlign = ContentAlignment.MiddleCenter,
-                Dock = DockStyle.Fill,
-                Padding = new Padding(10),
+                Font = new Font("Segoe UI", 10),
+                Location = new Point(65, 25),
+                Size = new Size(235, 50),
+                TextAlign = ContentAlignment.MiddleLeft,
             };
 
-            this.Controls.Add(lblMessage);
+            var lblCountdown = new Label
+            {
+                Text = $"Closing in {seconds}s...",
+                Font = new Font("Segoe UI", 8),
+                ForeColor = Color.Gray,
+                Location = new Point(20, 80),
+                AutoSize = true,
+            };
 
-            timer = new System.Windows.Forms.Timer();
-            timer.Interval = durationMs;
+            var btnOK = new Button
+            {
+                Text = "OK",
+                Size = new Size(75, 26),
+                Location = new Point(225, 75),
+                Cursor = Cursors.Hand,
+            };
+            btnOK.Click += (s, e) => form.Close();
+
+            form.Controls.AddRange(new Control[]
+            {
+                picIcon, lblMessage, lblCountdown, btnOK
+            });
+
+            int remaining = seconds;
+            var timer = new System.Windows.Forms.Timer { Interval = 1000 };
             timer.Tick += (s, e) =>
             {
-                timer.Stop();
-                this.Close();
+                remaining--;
+                lblCountdown.Text = $"Closing in {remaining}s...";
+                if (remaining <= 0)
+                {
+                    timer.Stop();
+                    form.Close();
+                }
             };
-            timer.Start();
+
+            form.Shown += (s, e) => timer.Start();
+            form.FormClosed += (s, e) => timer.Dispose();
+
+            form.Show();
         }
 
+        public static void Success(string message, int seconds = 3)
+            => Show(message, "Success", seconds);
 
-        public static void Show(string message, ToastType type = ToastType.Info, int seconds = 5)
-        {
-            var toast = new ToastForm(message, type, seconds * 1000);
-            toast.Show();
-        }
+        public static void Error(string message, int seconds = 3)
+            => Show(message, "Error", seconds);
 
-        public static void Success(string message, int seconds = 5)
-            => Show(message, ToastType.Success, seconds);
+        public static void Warning(string message, int seconds = 3)
+            => Show(message, "Warning", seconds);
 
-        public static void Error(string message, int seconds = 5)
-            => Show(message, ToastType.Error, seconds);
-
-        public static void Warning(string message, int seconds = 5)
-            => Show(message, ToastType.Warning, seconds);
-
-        public static void Info(string message, int seconds = 5)
-            => Show(message, ToastType.Info, seconds);
+        public static void Info(string message, int seconds = 3)
+            => Show(message, "Notice", seconds);
     }
 }

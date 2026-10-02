@@ -56,7 +56,6 @@ namespace CafeManagement.Data
             ";
             cmd.ExecuteNonQuery();
 
-            // Tạo tài khoản admin mặc định nếu chưa có
             SeedDefaultAdmin(connection);
         }
 
