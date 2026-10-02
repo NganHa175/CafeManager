@@ -9,11 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Forms\Menu\" />
     <Folder Include="Forms\Statistics\" />
     <Folder Include="Forms\Orders\" />
     <Folder Include="Forms\Tables\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
   <ItemGroup>

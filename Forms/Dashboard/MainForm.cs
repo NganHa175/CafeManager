@@ -27,27 +27,36 @@ namespace CafeManagement.Forms.Dashboard
 
             // Mặc định mở Menu khi vào app
             NavigateTo("menu");
-            SetActiveButton(btnMenu);
         }
 
         // Điều hướng sang form tương ứng
         private void NavigateTo(string section)
         {
-            // Xóa nội dung cũ
             pnlContent.Controls.Clear();
 
-            // Placeholder tạm thời
-            var placeholder = new Label
+            Control view = section switch
             {
-                Text = $"[ {section.ToUpper()} —  ]",
-                Font = new Font("Segoe UI", 14),
-                ForeColor = Color.FromArgb(101, 67, 33),
-                TextAlign = ContentAlignment.MiddleCenter,
-                Dock = DockStyle.Fill,
+                "menu" => new CafeManagement.Forms.Menu.MenuForm
+                {
+                    TopLevel = false,
+                    Dock = DockStyle.Fill,
+                    FormBorderStyle = FormBorderStyle.None,
+                },
+                _ => new Label
+                {
+                    Text = $"[ {section.ToUpper()} — Coming soon ]",
+                    Font = new Font("Segoe UI", 14),
+                    ForeColor = Color.FromArgb(101, 67, 33),
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Dock = DockStyle.Fill,
+                }
             };
 
-            pnlContent.Controls.Add(placeholder);
+            pnlContent.Controls.Add(view);
 
+            if (view is Form f) f.Show();
+
+            // Highlight nút đang active
             switch (section)
             {
                 case "menu": SetActiveButton(btnMenu); break;
