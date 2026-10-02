@@ -1,20 +1,14 @@
 ﻿using CafeManagement.Data;
 using CafeManagement.Models;
-using Microsoft.Data.Sqlite;
 
 namespace CafeManagement.Repositories
 {
     public class MenuRepository
     {
-        // Lấy tất cả món
         public List<MenuItem> GetAll()
         {
             var list = new List<MenuItem>();
-
-            using var connection = new SqliteConnection(Database.ConnectionString);
-            connection.Open();
-
-            var cmd = connection.CreateCommand();
+            var cmd = Database.Connection.CreateCommand();
             cmd.CommandText = "SELECT Id, Name, Price, Category, IsAvailable FROM MenuItems";
 
             using var reader = cmd.ExecuteReader();
@@ -29,19 +23,13 @@ namespace CafeManagement.Repositories
                     IsAvailable = reader.GetInt32(4) == 1,
                 });
             }
-
             return list;
         }
 
-        // Tìm kiếm theo tên
         public List<MenuItem> Search(string keyword)
         {
             var list = new List<MenuItem>();
-
-            using var connection = new SqliteConnection(Database.ConnectionString);
-            connection.Open();
-
-            var cmd = connection.CreateCommand();
+            var cmd = Database.Connection.CreateCommand();
             cmd.CommandText = @"
                 SELECT Id, Name, Price, Category, IsAvailable 
                 FROM MenuItems 
@@ -61,17 +49,12 @@ namespace CafeManagement.Repositories
                     IsAvailable = reader.GetInt32(4) == 1,
                 });
             }
-
             return list;
         }
 
-        // Thêm món mới
         public void Add(MenuItem item)
         {
-            using var connection = new SqliteConnection(Database.ConnectionString);
-            connection.Open();
-
-            var cmd = connection.CreateCommand();
+            var cmd = Database.Connection.CreateCommand();
             cmd.CommandText = @"
                 INSERT INTO MenuItems (Name, Price, Category, IsAvailable)
                 VALUES (@name, @price, @category, @isAvailable)
@@ -80,22 +63,17 @@ namespace CafeManagement.Repositories
             cmd.Parameters.AddWithValue("@price", item.Price);
             cmd.Parameters.AddWithValue("@category", item.Category);
             cmd.Parameters.AddWithValue("@isAvailable", item.IsAvailable ? 1 : 0);
-
             cmd.ExecuteNonQuery();
         }
 
-        // Cập nhật món
         public void Update(MenuItem item)
         {
-            using var connection = new SqliteConnection(Database.ConnectionString);
-            connection.Open();
-
-            var cmd = connection.CreateCommand();
+            var cmd = Database.Connection.CreateCommand();
             cmd.CommandText = @"
                 UPDATE MenuItems 
-                SET Name        = @name, 
-                    Price       = @price, 
-                    Category    = @category, 
+                SET Name        = @name,
+                    Price       = @price,
+                    Category    = @category,
                     IsAvailable = @isAvailable
                 WHERE Id = @id
             ";
@@ -104,20 +82,14 @@ namespace CafeManagement.Repositories
             cmd.Parameters.AddWithValue("@price", item.Price);
             cmd.Parameters.AddWithValue("@category", item.Category);
             cmd.Parameters.AddWithValue("@isAvailable", item.IsAvailable ? 1 : 0);
-
             cmd.ExecuteNonQuery();
         }
 
-        // Xóa món
         public void Delete(int id)
         {
-            using var connection = new SqliteConnection(Database.ConnectionString);
-            connection.Open();
-
-            var cmd = connection.CreateCommand();
+            var cmd = Database.Connection.CreateCommand();
             cmd.CommandText = "DELETE FROM MenuItems WHERE Id = @id";
             cmd.Parameters.AddWithValue("@id", id);
-
             cmd.ExecuteNonQuery();
         }
     }

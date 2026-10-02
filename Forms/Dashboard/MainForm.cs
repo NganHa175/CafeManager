@@ -18,55 +18,58 @@ namespace CafeManagement.Forms.Dashboard
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-
-            // Hiển thị tên người dùng trên sidebar
             lblCurrentUser.Text = $"{_currentUserName}\n({_currentUserRole})";
-
-            // Toast chào mừng hiện sau khi MainForm đã mở
             ToastForm.Success($"Welcome, {_currentUserName}!");
-
-            // Mặc định mở Menu khi vào app
             NavigateTo("menu");
         }
 
-        // Điều hướng sang form tương ứng
         private void NavigateTo(string section)
         {
             pnlContent.Controls.Clear();
 
-            Control view = section switch
-            {
-                "menu" => new CafeManagement.Forms.Menu.MenuForm
-                {
-                    TopLevel = false,
-                    Dock = DockStyle.Fill,
-                    FormBorderStyle = FormBorderStyle.None,
-                },
-                _ => new Label
-                {
-                    Text = $"[ {section.ToUpper()} — Coming soon ]",
-                    Font = new Font("Segoe UI", 14),
-                    ForeColor = Color.FromArgb(101, 67, 33),
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    Dock = DockStyle.Fill,
-                }
-            };
-
-            pnlContent.Controls.Add(view);
-
-            if (view is Form f) f.Show();
-
-            // Highlight nút đang active
             switch (section)
             {
-                case "menu": SetActiveButton(btnMenu); break;
-                case "tables": SetActiveButton(btnTables); break;
-                case "orders": SetActiveButton(btnOrders); break;
-                case "statistics": SetActiveButton(btnStatistics); break;
+                case "menu":
+                    var menuForm = new CafeManagement.Forms.Menu.MenuForm
+                    {
+                        TopLevel = false,
+                        FormBorderStyle = FormBorderStyle.None,
+                        Dock = DockStyle.Fill,
+                    };
+                    pnlContent.Controls.Add(menuForm);
+                    menuForm.Show();
+                    SetActiveButton(btnMenu);
+                    break;
+
+                case "tables":
+                    pnlContent.Controls.Add(MakePlaceholder("TABLES"));
+                    SetActiveButton(btnTables);
+                    break;
+
+                case "orders":
+                    pnlContent.Controls.Add(MakePlaceholder("ORDERS"));
+                    SetActiveButton(btnOrders);
+                    break;
+
+                case "statistics":
+                    pnlContent.Controls.Add(MakePlaceholder("STATISTICS"));
+                    SetActiveButton(btnStatistics);
+                    break;
             }
         }
 
-        // Highlight nút sidebar đang được chọn
+        private Label MakePlaceholder(string text)
+        {
+            return new Label
+            {
+                Text = $"[ {text} — Coming soon ]",
+                Font = new Font("Segoe UI", 14),
+                ForeColor = Color.FromArgb(101, 67, 33),
+                TextAlign = ContentAlignment.MiddleCenter,
+                Dock = DockStyle.Fill,
+            };
+        }
+
         private void SetActiveButton(Button activeBtn)
         {
             var sidebarButtons = new[] { btnMenu, btnTables, btnOrders, btnStatistics };
@@ -79,7 +82,6 @@ namespace CafeManagement.Forms.Dashboard
             activeBtn.ForeColor = Color.White;
         }
 
-        // Logout
         private void btnLogout_Click(object sender, EventArgs e)
         {
             var confirm = MessageBox.Show(
