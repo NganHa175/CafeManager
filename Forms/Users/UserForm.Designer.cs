@@ -28,161 +28,170 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
-            textBox3 = new TextBox();
-            comboBox1 = new ComboBox();
-            button1 = new Button();
-            button2 = new Button();
-            button3 = new Button();
-            button4 = new Button();
-            dataGridView1 = new DataGridView();
-            label4 = new Label();
+            AccountLabel = new Label();
+            PasswordLabel = new Label();
+            UsernameDisplayLabel = new Label();
+            AccountName = new TextBox();
+            Password = new TextBox();
+            UsernameDisplay = new TextBox();
+            AuthorityComboBox = new ComboBox();
+            AddButton = new Button();
+            DeleteButton = new Button();
+            ChangeButton = new Button();
+            ChangePasswordButton = new Button();
+            UserData = new DataGridView();
+            AuthorityLabel = new Label();
             label5 = new Label();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)UserData).BeginInit();
             SuspendLayout();
             // 
-            // label1
+            // AccountLabel
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(405, 14);
-            label1.Name = "label1";
-            label1.Size = new Size(99, 28);
-            label1.TabIndex = 0;
-            label1.Text = "Tài khoản";
-            label1.Click += label1_Click;
+            AccountLabel.AutoSize = true;
+            AccountLabel.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            AccountLabel.Location = new Point(404, 15);
+            AccountLabel.Name = "AccountLabel";
+            AccountLabel.Size = new Size(99, 28);
+            AccountLabel.TabIndex = 0;
+            AccountLabel.Text = "Tài khoản";
+            AccountLabel.Click += AccountLabel_Click;
             // 
-            // label2
+            // PasswordLabel
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(405, 66);
-            label2.Name = "label2";
-            label2.Size = new Size(98, 28);
-            label2.TabIndex = 1;
-            label2.Text = "Mật khẩu";
+            PasswordLabel.AutoSize = true;
+            PasswordLabel.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            PasswordLabel.Location = new Point(405, 66);
+            PasswordLabel.Name = "PasswordLabel";
+            PasswordLabel.Size = new Size(98, 28);
+            PasswordLabel.TabIndex = 1;
+            PasswordLabel.Text = "Mật khẩu";
+            PasswordLabel.Click += PasswordLabel_Click;
             // 
-            // label3
+            // UsernameDisplayLabel
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(405, 117);
-            label3.Name = "label3";
-            label3.Size = new Size(109, 25);
-            label3.TabIndex = 2;
-            label3.Text = "Tên hiển thị";
+            UsernameDisplayLabel.AutoSize = true;
+            UsernameDisplayLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            UsernameDisplayLabel.Location = new Point(405, 117);
+            UsernameDisplayLabel.Name = "UsernameDisplayLabel";
+            UsernameDisplayLabel.Size = new Size(109, 25);
+            UsernameDisplayLabel.TabIndex = 2;
+            UsernameDisplayLabel.Text = "Tên hiển thị";
+            UsernameDisplayLabel.Click += UsernameDisplayLabel_Click;
             // 
-            // textBox1
+            // AccountName
             // 
-            textBox1.BackColor = SystemColors.Info;
-            textBox1.BorderStyle = BorderStyle.FixedSingle;
-            textBox1.Location = new Point(509, 12);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(177, 31);
-            textBox1.TabIndex = 3;
+            AccountName.BackColor = SystemColors.Info;
+            AccountName.BorderStyle = BorderStyle.FixedSingle;
+            AccountName.Location = new Point(509, 12);
+            AccountName.Name = "AccountName";
+            AccountName.Size = new Size(177, 31);
+            AccountName.TabIndex = 3;
+            AccountName.TextChanged += AccountName_TextChanged;
             // 
-            // textBox2
+            // Password
             // 
-            textBox2.BackColor = SystemColors.Info;
-            textBox2.BorderStyle = BorderStyle.FixedSingle;
-            textBox2.Location = new Point(509, 63);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(177, 31);
-            textBox2.TabIndex = 4;
+            Password.BackColor = SystemColors.Info;
+            Password.BorderStyle = BorderStyle.FixedSingle;
+            Password.Location = new Point(509, 63);
+            Password.Name = "Password";
+            Password.Size = new Size(177, 31);
+            Password.TabIndex = 4;
+            Password.TextChanged += Password_TextChanged;
             // 
-            // textBox3
+            // UsernameDisplay
             // 
-            textBox3.BackColor = SystemColors.Info;
-            textBox3.BorderStyle = BorderStyle.FixedSingle;
-            textBox3.Location = new Point(509, 115);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(177, 31);
-            textBox3.TabIndex = 5;
+            UsernameDisplay.BackColor = SystemColors.Info;
+            UsernameDisplay.BorderStyle = BorderStyle.FixedSingle;
+            UsernameDisplay.Location = new Point(509, 115);
+            UsernameDisplay.Name = "UsernameDisplay";
+            UsernameDisplay.Size = new Size(177, 31);
+            UsernameDisplay.TabIndex = 5;
+            UsernameDisplay.TextChanged += UsernameDisplay_TextChanged;
             // 
-            // comboBox1
+            // AuthorityComboBox
             // 
-            comboBox1.BackColor = SystemColors.Info;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(509, 166);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(177, 33);
-            comboBox1.TabIndex = 6;
+            AuthorityComboBox.BackColor = SystemColors.Info;
+            AuthorityComboBox.FormattingEnabled = true;
+            AuthorityComboBox.Location = new Point(509, 166);
+            AuthorityComboBox.Name = "AuthorityComboBox";
+            AuthorityComboBox.Size = new Size(177, 33);
+            AuthorityComboBox.TabIndex = 6;
+            AuthorityComboBox.SelectedIndexChanged += AuthorityComboBox_SelectedIndexChanged;
             // 
-            // button1
+            // AddButton
             // 
-            button1.BackColor = Color.FromArgb(101, 67, 33);
-            button1.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(405, 299);
-            button1.Name = "button1";
-            button1.Size = new Size(137, 83);
-            button1.TabIndex = 7;
-            button1.Text = "Thêm";
-            button1.UseVisualStyleBackColor = false;
+            AddButton.BackColor = Color.FromArgb(101, 67, 33);
+            AddButton.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            AddButton.ForeColor = Color.White;
+            AddButton.Location = new Point(405, 299);
+            AddButton.Name = "AddButton";
+            AddButton.Size = new Size(137, 83);
+            AddButton.TabIndex = 7;
+            AddButton.Text = "Thêm";
+            AddButton.UseVisualStyleBackColor = false;
+            AddButton.Click += AddButton_Click;
             // 
-            // button2
+            // DeleteButton
             // 
-            button2.BackColor = Color.FromArgb(101, 67, 33);
-            button2.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.ForeColor = Color.White;
-            button2.Location = new Point(548, 299);
-            button2.Name = "button2";
-            button2.Size = new Size(137, 83);
-            button2.TabIndex = 8;
-            button2.Text = "Xóa";
-            button2.UseVisualStyleBackColor = false;
+            DeleteButton.BackColor = Color.FromArgb(101, 67, 33);
+            DeleteButton.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            DeleteButton.ForeColor = Color.White;
+            DeleteButton.Location = new Point(548, 299);
+            DeleteButton.Name = "DeleteButton";
+            DeleteButton.Size = new Size(137, 83);
+            DeleteButton.TabIndex = 8;
+            DeleteButton.Text = "Xóa";
+            DeleteButton.UseVisualStyleBackColor = false;
+            DeleteButton.Click += DeleteButton_Click;
             // 
-            // button3
+            // ChangeButton
             // 
-            button3.BackColor = Color.FromArgb(101, 67, 33);
-            button3.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button3.ForeColor = Color.White;
-            button3.Location = new Point(405, 388);
-            button3.Name = "button3";
-            button3.Size = new Size(137, 83);
-            button3.TabIndex = 9;
-            button3.Text = "Sửa";
-            button3.UseVisualStyleBackColor = false;
-            button3.Click += button3_Click;
+            ChangeButton.BackColor = Color.FromArgb(101, 67, 33);
+            ChangeButton.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ChangeButton.ForeColor = Color.White;
+            ChangeButton.Location = new Point(405, 388);
+            ChangeButton.Name = "ChangeButton";
+            ChangeButton.Size = new Size(137, 83);
+            ChangeButton.TabIndex = 9;
+            ChangeButton.Text = "Sửa";
+            ChangeButton.UseVisualStyleBackColor = false;
+            ChangeButton.Click += ChangeButton_Click;
             // 
-            // button4
+            // ChangePasswordButton
             // 
-            button4.BackColor = Color.FromArgb(101, 67, 33);
-            button4.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button4.ForeColor = Color.White;
-            button4.Location = new Point(548, 388);
-            button4.Name = "button4";
-            button4.Size = new Size(138, 83);
-            button4.TabIndex = 10;
-            button4.Text = "Đổi mật khẩu";
-            button4.UseVisualStyleBackColor = false;
-            button4.Click += button4_Click;
+            ChangePasswordButton.BackColor = Color.FromArgb(101, 67, 33);
+            ChangePasswordButton.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ChangePasswordButton.ForeColor = Color.White;
+            ChangePasswordButton.Location = new Point(548, 388);
+            ChangePasswordButton.Name = "ChangePasswordButton";
+            ChangePasswordButton.Size = new Size(138, 83);
+            ChangePasswordButton.TabIndex = 10;
+            ChangePasswordButton.Text = "Đổi mật khẩu";
+            ChangePasswordButton.UseVisualStyleBackColor = false;
+            ChangePasswordButton.Click += ChangePasswordButton_Click;
             // 
-            // dataGridView1
+            // UserData
             // 
-            dataGridView1.BackgroundColor = SystemColors.Info;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.GridColor = Color.Wheat;
-            dataGridView1.Location = new Point(12, 12);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 62;
-            dataGridView1.Size = new Size(387, 480);
-            dataGridView1.TabIndex = 11;
+            UserData.BackgroundColor = SystemColors.Info;
+            UserData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            UserData.GridColor = Color.Wheat;
+            UserData.Location = new Point(12, 12);
+            UserData.Name = "UserData";
+            UserData.RowHeadersWidth = 62;
+            UserData.Size = new Size(387, 480);
+            UserData.TabIndex = 11;
+            UserData.CellClick += UserData_CellClick;
             // 
-            // label4
+            // AuthorityLabel
             // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(405, 166);
-            label4.Name = "label4";
-            label4.Size = new Size(102, 25);
-            label4.TabIndex = 12;
-            label4.Text = "Quyền hạn";
-            label4.Click += label4_Click;
+            AuthorityLabel.AutoSize = true;
+            AuthorityLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            AuthorityLabel.Location = new Point(405, 166);
+            AuthorityLabel.Name = "AuthorityLabel";
+            AuthorityLabel.Size = new Size(102, 25);
+            AuthorityLabel.TabIndex = 12;
+            AuthorityLabel.Text = "Quyền hạn";
+            AuthorityLabel.Click += AuthorityLabel_Click;
             // 
             // label5
             // 
@@ -193,6 +202,7 @@
             label5.Size = new Size(194, 69);
             label5.TabIndex = 13;
             label5.Text = "Coffee☕";
+            label5.Click += label5_Click;
             // 
             // UserForm
             // 
@@ -201,43 +211,43 @@
             BackColor = Color.FromArgb(245, 240, 235);
             ClientSize = new Size(698, 504);
             Controls.Add(label5);
-            Controls.Add(label4);
-            Controls.Add(dataGridView1);
-            Controls.Add(button4);
-            Controls.Add(button3);
-            Controls.Add(button2);
-            Controls.Add(button1);
-            Controls.Add(comboBox1);
-            Controls.Add(textBox3);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
-            Controls.Add(label3);
-            Controls.Add(label2);
-            Controls.Add(label1);
+            Controls.Add(AuthorityLabel);
+            Controls.Add(UserData);
+            Controls.Add(ChangePasswordButton);
+            Controls.Add(ChangeButton);
+            Controls.Add(DeleteButton);
+            Controls.Add(AddButton);
+            Controls.Add(AuthorityComboBox);
+            Controls.Add(UsernameDisplay);
+            Controls.Add(Password);
+            Controls.Add(AccountName);
+            Controls.Add(UsernameDisplayLabel);
+            Controls.Add(PasswordLabel);
+            Controls.Add(AccountLabel);
             FormBorderStyle = FormBorderStyle.None;
             Name = "UserForm";
             Text = "UserForm";
-            Load += UserForm_Load;
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            Load += UserForm_Load_1;
+            ((System.ComponentModel.ISupportInitialize)UserData).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private Label label1;
-        private Label label2;
-        private Label label3;
-        private TextBox textBox1;
-        private TextBox textBox2;
-        private TextBox textBox3;
-        private ComboBox comboBox1;
-        private Button button1;
-        private Button button2;
-        private Button button3;
-        private Button button4;
-        private DataGridView dataGridView1;
-        private Label label4;
+        private Label AccountLabel;
+        private Label PasswordLabel;
+        private Label UsernameDisplayLabel;
+        private TextBox AccountName;
+        private TextBox Password;
+        private TextBox UsernameDisplay;
+        private ComboBox AuthorityComboBox;
+        private Button AddButton;
+        private Button DeleteButton;
+        private Button ChangeButton;
+        private Button ChangePasswordButton;
+        private DataGridView UserData;
+        private Label AuthorityLabel;
         private Label label5;
     }
 }
