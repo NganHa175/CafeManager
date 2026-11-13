@@ -13,6 +13,7 @@ namespace CafeManagement.Forms.Dashboard
         private Button btnTables;
         private Button btnOrders;
         private Button btnStatistics;
+        private Button btnUsers;
         private Button btnLogout;
         private Panel pnlContent;
 
@@ -60,6 +61,11 @@ namespace CafeManagement.Forms.Dashboard
                 Padding = new Padding(22, 0, 0, 0),
             };
 
+            btnMenu = CreateSidebarButton("🍽  Menu");
+            btnTables = CreateSidebarButton("🪑  Tables");
+            btnOrders = CreateSidebarButton("📋  Orders");
+            btnStatistics = CreateSidebarButton("📊  Statistics");
+            btnUsers = CreateSidebarButton("👤  Users");
             var divider = new Panel
             {
                 Dock = DockStyle.Top,
@@ -96,6 +102,7 @@ namespace CafeManagement.Forms.Dashboard
             btnLogout.FlatAppearance.MouseOverBackColor = Theme.EspressoLight;
             btnLogout.Click += new EventHandler(btnLogout_Click);
 
+            pnlSidebar.Controls.Add(btnUsers);
             pnlSidebar.Controls.Add(btnStatistics);
             pnlSidebar.Controls.Add(btnOrders);
             pnlSidebar.Controls.Add(btnTables);
@@ -120,6 +127,7 @@ namespace CafeManagement.Forms.Dashboard
             btnTables.Click += (s, e) => NavigateTo("tables");
             btnOrders.Click += (s, e) => NavigateTo("orders");
             btnStatistics.Click += (s, e) => NavigateTo("statistics");
+            btnUsers.Click += (s, e) => NavigateTo("users");
         }
 
         private Button CreateSidebarButton(string text)

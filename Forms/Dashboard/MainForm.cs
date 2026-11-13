@@ -64,6 +64,17 @@ namespace CafeManagement.Forms.Dashboard
                     pnlContent.Controls.Add(MakePlaceholder("Statistics"));
                     SetActiveButton(btnStatistics);
                     break;
+                case "users":
+                    var userForm = new CafeManagement.Forms.Users.UserForm
+                    {
+                        TopLevel = false,
+                        FormBorderStyle = FormBorderStyle.None,
+                        Dock = DockStyle.Fill,
+                    };
+                    pnlContent.Controls.Add(userForm);
+                    userForm.Show();
+                    SetActiveButton(btnUsers);
+                    break;
             }
         }
 
@@ -81,7 +92,7 @@ namespace CafeManagement.Forms.Dashboard
 
         private void SetActiveButton(Button activeBtn)
         {
-            var sidebarButtons = new[] { btnMenu, btnTables, btnOrders, btnStatistics };
+            var sidebarButtons = new[] { btnMenu, btnTables, btnOrders, btnStatistics, btnUsers };
             foreach (var btn in sidebarButtons)
             {
                 btn.BackColor = Theme.Espresso;
