@@ -5,8 +5,8 @@ namespace CafeManagement.Forms.Dashboard
 {
     public partial class MainForm : Form
     {
-        private string _currentUserName;
-        private string _currentUserRole;
+        private readonly string _currentUserName;
+        private readonly string _currentUserRole;
 
         public MainForm(string fullName, string role)
         {
@@ -18,14 +18,23 @@ namespace CafeManagement.Forms.Dashboard
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            lblCurrentUser.Text = $"{_currentUserName}\n({_currentUserRole})";
+            lblCurrentUser.Text = $"{_currentUserName}\n{_currentUserRole}";
             ToastForm.Success($"Welcome, {_currentUserName}!");
             NavigateTo("menu");
         }
 
+        private void ClearContent()
+        {
+            foreach (var c in pnlContent.Controls.Cast<Control>().ToList())
+            {
+                pnlContent.Controls.Remove(c);
+                c.Dispose();
+            }
+        }
+
         private void NavigateTo(string section)
         {
-            pnlContent.Controls.Clear();
+            ClearContent();
 
             switch (section)
             {
@@ -42,17 +51,17 @@ namespace CafeManagement.Forms.Dashboard
                     break;
 
                 case "tables":
-                    pnlContent.Controls.Add(MakePlaceholder("TABLES"));
+                    pnlContent.Controls.Add(MakePlaceholder("Tables"));
                     SetActiveButton(btnTables);
                     break;
 
                 case "orders":
-                    pnlContent.Controls.Add(MakePlaceholder("ORDERS"));
+                    pnlContent.Controls.Add(MakePlaceholder("Orders"));
                     SetActiveButton(btnOrders);
                     break;
 
                 case "statistics":
-                    pnlContent.Controls.Add(MakePlaceholder("STATISTICS"));
+                    pnlContent.Controls.Add(MakePlaceholder("Statistics"));
                     SetActiveButton(btnStatistics);
                     break;
                 case "users":
@@ -73,9 +82,9 @@ namespace CafeManagement.Forms.Dashboard
         {
             return new Label
             {
-                Text = $"[ {text} — Coming soon ]",
-                Font = new Font("Segoe UI", 14),
-                ForeColor = Color.FromArgb(101, 67, 33),
+                Text = $"{text}\nComing soon",
+                Font = Theme.MakeFont(16),
+                ForeColor = Theme.TextMuted,
                 TextAlign = ContentAlignment.MiddleCenter,
                 Dock = DockStyle.Fill,
             };
@@ -86,11 +95,15 @@ namespace CafeManagement.Forms.Dashboard
             var sidebarButtons = new[] { btnMenu, btnTables, btnOrders, btnStatistics, btnUsers };
             foreach (var btn in sidebarButtons)
             {
-                btn.BackColor = Color.Transparent;
-                btn.ForeColor = Color.White;
+                btn.BackColor = Theme.Espresso;
+                btn.ForeColor = Color.FromArgb(225, 210, 198);
+                btn.Tag = null;
+                btn.Invalidate();
             }
-            activeBtn.BackColor = Color.FromArgb(80, 50, 20);
+            activeBtn.BackColor = Theme.EspressoLight;
             activeBtn.ForeColor = Color.White;
+            activeBtn.Tag = "active";
+            activeBtn.Invalidate();
         }
 
         private void btnLogout_Click(object sender, EventArgs e)

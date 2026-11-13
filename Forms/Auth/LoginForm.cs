@@ -1,6 +1,7 @@
 ﻿using CafeManagement.Data;
 using CafeManagement.Forms.Dashboard;
 using CafeManagement.Helpers;
+using Microsoft.Data.Sqlite;
 
 namespace CafeManagement.Forms.Auth
 {
@@ -22,21 +23,24 @@ namespace CafeManagement.Forms.Auth
                 return;
             }
 
-            var cmd = Database.Connection.CreateCommand();
+            using var connection = new SqliteConnection(Database.ConnectionString);
+            connection.Open();
+            var cmd = connection.CreateCommand();
             cmd.CommandText = @"
-                SELECT Id, FullName, Role 
-                FROM Users 
+                SELECT Id, FullName, Role
+                FROM Users
                 WHERE Username = @username AND Password = @password
             ";
             cmd.Parameters.AddWithValue("@username", username);
             cmd.Parameters.AddWithValue("@password", password);
 
             using var reader = cmd.ExecuteReader();
-
             if (reader.Read())
             {
                 string fullName = reader.GetString(1);
                 string role = reader.GetString(2);
+                reader.Close();
+
                 this.Hide();
                 new MainForm(fullName, role).ShowDialog();
                 this.Close();
