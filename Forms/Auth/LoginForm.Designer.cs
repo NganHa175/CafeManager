@@ -1,10 +1,11 @@
-﻿namespace CafeManagement.Forms.Auth
+﻿using CafeManagement.Helpers;
+
+namespace CafeManagement.Forms.Auth
 {
     partial class LoginForm
     {
         private System.ComponentModel.IContainer components = null;
 
-        private Label lblTitle;
         private Label lblUsername;
         private Label lblPassword;
         private Label lblError;
@@ -21,102 +22,151 @@
 
         private void InitializeComponent()
         {
-            // ── Form ──────────────────────────────────────────
+            this.AutoScaleDimensions = new SizeF(96F, 96F);
+            this.AutoScaleMode = AutoScaleMode.Dpi;
+
             this.Text = "Cafe Manager - Login";
-            this.ClientSize = new Size(420, 320);
+            this.ClientSize = new Size(760, 440);
             this.StartPosition = FormStartPosition.CenterScreen;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.BackColor = Color.FromArgb(245, 240, 235); // cream
+            this.BackColor = Color.White;
 
-            // ── Title ─────────────────────────────────────────
-            lblTitle = new Label
+            var pnlBrand = new Panel
             {
-                Text = "☕ CAFE MANAGER",
-                Font = new Font("Segoe UI", 18, FontStyle.Bold),
-                ForeColor = Color.FromArgb(101, 67, 33),
-                TextAlign = ContentAlignment.MiddleCenter,
-                Dock = DockStyle.Top,
-                Height = 65,
-                Padding = new Padding(0, 12, 0, 0),
+                Dock = DockStyle.Left,
+                Width = 320,
+                BackColor = Theme.Espresso,
             };
 
-            // ── Username label ────────────────────────────────
+            var lblCup = new Label
+            {
+                Text = "☕",
+                Font = new Font("Segoe UI Emoji", 36, FontStyle.Regular, GraphicsUnit.Point),
+                ForeColor = Theme.Caramel,
+                Location = new Point(20, 60),
+                AutoSize = true,
+            };
+
+            var lblBrand = new Label
+            {
+                Text = "Cafe Manager",
+                Font = Theme.MakeFont(20, FontStyle.Bold),
+                ForeColor = Color.White,
+                Location = new Point(36, 150),
+                AutoSize = true,
+            };
+
+            var lblTagline = new Label
+            {
+                Text = "Menu, tables and orders, all in one place.",
+                Font = Theme.MakeFont(10.5f),
+                ForeColor = Color.FromArgb(200, 180, 165),
+                Location = new Point(34, 215),
+                AutoSize = true,
+                MaximumSize = new Size(260, 0),
+            };
+
+            pnlBrand.Controls.AddRange(new Control[] { lblCup, lblBrand, lblTagline });
+
+
+            var pnlLogin = new Panel
+            {
+                Dock = DockStyle.Fill,
+                BackColor = Color.White,
+            };
+
+            var lblWelcome = new Label
+            {
+                Text = "Welcome back",
+                Font = Theme.MakeFont(20, FontStyle.Bold),
+                ForeColor = Theme.TextDark,
+                Location = new Point(60, 60),
+                AutoSize = true,
+            };
+
+            var lblHint = new Label
+            {
+                Text = "Sign in to your account",
+                Font = Theme.MakeFont(10),
+                ForeColor = Theme.TextMuted,
+                Location = new Point(62, 108),
+                AutoSize = true,
+            };
+
             lblUsername = new Label
             {
                 Text = "Username",
-                Location = new Point(80, 90),
+                Font = Theme.MakeFont(9.5f, FontStyle.Bold),
+                ForeColor = Theme.TextDark,
+                Location = new Point(60, 160),
                 AutoSize = true,
-                Font = new Font("Segoe UI", 10),
-                ForeColor = Color.FromArgb(80, 50, 20),
             };
 
-            // ── Username textbox ──────────────────────────────
             txtUsername = new TextBox
             {
                 Name = "txtUsername",
-                Location = new Point(80, 112),
-                Size = new Size(250, 30),
-                Font = new Font("Segoe UI", 11),
+                Location = new Point(60, 184),
+                Width = 340,
+                Font = Theme.MakeFont(11),
                 BorderStyle = BorderStyle.FixedSingle,
+                BackColor = Theme.Cream,
             };
 
-            // ── Password label ────────────────────────────────
             lblPassword = new Label
             {
                 Text = "Password",
-                Location = new Point(80, 152),
+                Font = Theme.MakeFont(9.5f, FontStyle.Bold),
+                ForeColor = Theme.TextDark,
+                Location = new Point(60, 232),
                 AutoSize = true,
-                Font = new Font("Segoe UI", 10),
-                ForeColor = Color.FromArgb(80, 50, 20),
             };
 
-            // ── Password textbox ──────────────────────────────
             txtPassword = new TextBox
             {
                 Name = "txtPassword",
-                Location = new Point(80, 174),
-                Size = new Size(250, 30),
-                Font = new Font("Segoe UI", 11),
-                PasswordChar = '*',
+                Location = new Point(60, 256),
+                Width = 340,
+                Font = Theme.MakeFont(11),
+                PasswordChar = '●',
                 BorderStyle = BorderStyle.FixedSingle,
+                BackColor = Theme.Cream,
             };
 
-            // ── Error label ───────────────────────────────────
             lblError = new Label
             {
                 Text = "",
-                Location = new Point(80, 212),
-                Size = new Size(250, 20),
-                ForeColor = Color.Red,
-                Font = new Font("Segoe UI", 9),
+                Location = new Point(60, 298),
+                Size = new Size(340, 22),
+                ForeColor = Theme.Danger,
+                Font = Theme.MakeFont(9),
             };
 
-            // ── Login button ──────────────────────────────────
             btnLogin = new Button
             {
                 Name = "btnLogin",
                 Text = "Login",
-                Location = new Point(80, 238),
-                Size = new Size(250, 38),
-                BackColor = Color.FromArgb(101, 67, 33),
-                ForeColor = Color.White,
-                Font = new Font("Segoe UI", 11, FontStyle.Bold),
-                FlatStyle = FlatStyle.Flat,
-                Cursor = Cursors.Hand,
+                Location = new Point(60, 328),
+                Size = new Size(340, 44),
             };
-            btnLogin.FlatAppearance.BorderSize = 0;
+            Theme.Primary(btnLogin);
+            btnLogin.Font = Theme.MakeFont(11, FontStyle.Bold);
             btnLogin.Click += new EventHandler(btnLogin_Click);
 
-            // ── Thêm controls vào form ────────────────────────
-            this.Controls.AddRange(new Control[]
+            pnlLogin.Controls.AddRange(new Control[]
             {
-                lblTitle,
+                lblWelcome, lblHint,
                 lblUsername, txtUsername,
                 lblPassword, txtPassword,
                 lblError,
                 btnLogin,
             });
+
+            this.Controls.Add(pnlLogin);
+            this.Controls.Add(pnlBrand);
+
+            this.AcceptButton = btnLogin;
+            this.ActiveControl = txtUsername;
         }
     }
 }

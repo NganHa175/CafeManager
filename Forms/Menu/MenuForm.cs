@@ -29,26 +29,32 @@ namespace CafeManagement.Forms.Menu
             dgvMenu.Rows.Clear();
             foreach (var item in list)
             {
-                dgvMenu.Rows.Add(
+                int idx = dgvMenu.Rows.Add(
                     item.Id,
                     item.Name,
-                    item.Price.ToString("N0"),
+                    item.Price.ToString("N0") + " ₫",
                     item.Category,
                     item.IsAvailable ? "Yes" : "No"
                 );
+                var row = dgvMenu.Rows[idx];
+                row.Tag = item;
+                if (!item.IsAvailable)
+                    row.DefaultCellStyle.ForeColor = Theme.TextMuted;
             }
-            lblCount.Text = $"Total: {list.Count} items";
+            dgvMenu.ClearSelection();
+            lblCount.Text = $"{list.Count} items";
         }
 
         private void dgvMenu_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
-            var row = dgvMenu.Rows[e.RowIndex];
-            _selectedId = Convert.ToInt32(row.Cells[0].Value);
-            txtName.Text = row.Cells[1].Value.ToString();
-            txtPrice.Text = row.Cells[2].Value.ToString()!.Replace(",", "");
-            txtCategory.Text = row.Cells[3].Value.ToString()!;
-            chkAvailable.Checked = row.Cells[4].Value.ToString() == "Yes";
+            if (dgvMenu.Rows[e.RowIndex].Tag is not MenuItem item) return;
+
+            _selectedId = item.Id;
+            txtName.Text = item.Name;
+            txtPrice.Text = item.Price.ToString();
+            txtCategory.Text = item.Category;
+            chkAvailable.Checked = item.IsAvailable;
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -57,7 +63,7 @@ namespace CafeManagement.Forms.Menu
             _repo.Add(new MenuItem
             {
                 Name = txtName.Text.Trim(),
-                Price = decimal.Parse(txtPrice.Text.Trim()),
+                Price = long.Parse(txtPrice.Text.Trim()),
                 Category = txtCategory.Text.Trim(),
                 IsAvailable = chkAvailable.Checked,
             });
@@ -74,7 +80,7 @@ namespace CafeManagement.Forms.Menu
             {
                 Id = _selectedId,
                 Name = txtName.Text.Trim(),
-                Price = decimal.Parse(txtPrice.Text.Trim()),
+                Price = long.Parse(txtPrice.Text.Trim()),
                 Category = txtCategory.Text.Trim(),
                 IsAvailable = chkAvailable.Checked,
             });
@@ -101,9 +107,14 @@ namespace CafeManagement.Forms.Menu
             }
         }
 
-        private void btnClear_Click(object sender, EventArgs e) => ClearForm();
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            ClearForm();
+            dgvMenu.ClearSelection();
+        }
 
-        private void txtSearch_TextChanged(object sender, EventArgs e) => LoadData(txtSearch.Text.Trim());
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+            => LoadData(txtSearch.Text.Trim());
 
         private void ClearForm()
         {
@@ -121,9 +132,9 @@ namespace CafeManagement.Forms.Menu
                 ToastForm.Warning("Please enter item name.");
                 return false;
             }
-            if (!decimal.TryParse(txtPrice.Text.Trim(), out _))
+            if (!long.TryParse(txtPrice.Text.Trim(), out var price) || price < 0)
             {
-                ToastForm.Warning("Price must be a number.");
+                ToastForm.Warning("Price must be a non-negative number.");
                 return false;
             }
             if (string.IsNullOrEmpty(txtCategory.Text.Trim()))

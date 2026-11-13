@@ -1,5 +1,6 @@
 ﻿using CafeManagement.Data;
 using CafeManagement.Models;
+using Microsoft.Data.Sqlite;
 
 namespace CafeManagement.Repositories
 {
@@ -8,89 +9,89 @@ namespace CafeManagement.Repositories
         public List<MenuItem> GetAll()
         {
             var list = new List<MenuItem>();
-            var cmd = Database.Connection.CreateCommand();
-            cmd.CommandText = "SELECT Id, Name, Price, Category, IsAvailable FROM MenuItems";
-
+            using var connection = new SqliteConnection(Database.ConnectionString);
+            connection.Open();
+            var cmd = connection.CreateCommand();
+            cmd.CommandText = "SELECT Id, Name, Price, Category, IsAvailable FROM MenuItems ORDER BY Category, Name";
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
-            {
-                list.Add(new MenuItem
-                {
-                    Id = reader.GetInt32(0),
-                    Name = reader.GetString(1),
-                    Price = reader.GetDecimal(2),
-                    Category = reader.GetString(3),
-                    IsAvailable = reader.GetInt32(4) == 1,
-                });
-            }
+                list.Add(Read(reader));
             return list;
         }
 
         public List<MenuItem> Search(string keyword)
         {
             var list = new List<MenuItem>();
-            var cmd = Database.Connection.CreateCommand();
+            using var connection = new SqliteConnection(Database.ConnectionString);
+            connection.Open();
+            var cmd = connection.CreateCommand();
             cmd.CommandText = @"
-                SELECT Id, Name, Price, Category, IsAvailable 
-                FROM MenuItems 
-                WHERE Name LIKE @keyword
+                SELECT Id, Name, Price, Category, IsAvailable
+                FROM MenuItems
+                WHERE Name LIKE @kw OR Category LIKE @kw
+                ORDER BY Category, Name
             ";
-            cmd.Parameters.AddWithValue("@keyword", $"%{keyword}%");
-
+            cmd.Parameters.AddWithValue("@kw", $"%{keyword}%");
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
-            {
-                list.Add(new MenuItem
-                {
-                    Id = reader.GetInt32(0),
-                    Name = reader.GetString(1),
-                    Price = reader.GetDecimal(2),
-                    Category = reader.GetString(3),
-                    IsAvailable = reader.GetInt32(4) == 1,
-                });
-            }
+                list.Add(Read(reader));
             return list;
         }
 
         public void Add(MenuItem item)
         {
-            var cmd = Database.Connection.CreateCommand();
+            using var connection = new SqliteConnection(Database.ConnectionString);
+            connection.Open();
+            var cmd = connection.CreateCommand();
             cmd.CommandText = @"
                 INSERT INTO MenuItems (Name, Price, Category, IsAvailable)
-                VALUES (@name, @price, @category, @isAvailable)
+                VALUES (@name, @price, @category, @available)
             ";
             cmd.Parameters.AddWithValue("@name", item.Name);
             cmd.Parameters.AddWithValue("@price", item.Price);
             cmd.Parameters.AddWithValue("@category", item.Category);
-            cmd.Parameters.AddWithValue("@isAvailable", item.IsAvailable ? 1 : 0);
+            cmd.Parameters.AddWithValue("@available", item.IsAvailable ? 1 : 0);
             cmd.ExecuteNonQuery();
         }
 
         public void Update(MenuItem item)
         {
-            var cmd = Database.Connection.CreateCommand();
+            using var connection = new SqliteConnection(Database.ConnectionString);
+            connection.Open();
+            var cmd = connection.CreateCommand();
             cmd.CommandText = @"
-                UPDATE MenuItems 
+                UPDATE MenuItems
                 SET Name        = @name,
                     Price       = @price,
                     Category    = @category,
-                    IsAvailable = @isAvailable
+                    IsAvailable = @available
                 WHERE Id = @id
             ";
             cmd.Parameters.AddWithValue("@id", item.Id);
             cmd.Parameters.AddWithValue("@name", item.Name);
             cmd.Parameters.AddWithValue("@price", item.Price);
             cmd.Parameters.AddWithValue("@category", item.Category);
-            cmd.Parameters.AddWithValue("@isAvailable", item.IsAvailable ? 1 : 0);
+            cmd.Parameters.AddWithValue("@available", item.IsAvailable ? 1 : 0);
             cmd.ExecuteNonQuery();
         }
 
         public void Delete(int id)
         {
-            var cmd = Database.Connection.CreateCommand();
+            using var connection = new SqliteConnection(Database.ConnectionString);
+            connection.Open();
+            var cmd = connection.CreateCommand();
             cmd.CommandText = "DELETE FROM MenuItems WHERE Id = @id";
             cmd.Parameters.AddWithValue("@id", id);
             cmd.ExecuteNonQuery();
         }
+
+        private static MenuItem Read(SqliteDataReader r) => new MenuItem
+        {
+            Id = r.GetInt32(0),
+            Name = r.GetString(1),
+            Price = r.GetInt64(2),
+            Category = r.GetString(3),
+            IsAvailable = r.GetInt32(4) == 1,
+        };
     }
 }

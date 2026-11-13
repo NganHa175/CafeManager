@@ -1,4 +1,6 @@
-﻿namespace CafeManagement.Forms.Menu
+﻿using CafeManagement.Helpers;
+
+namespace CafeManagement.Forms.Menu
 {
     partial class MenuForm
     {
@@ -6,7 +8,6 @@
 
         private DataGridView dgvMenu;
         private TextBox txtSearch;
-        private Label lblSearch;
         private Label lblCount;
         private Button btnDelete;
         private Panel pnlRight;
@@ -32,47 +33,41 @@
         private void InitializeComponent()
         {
             this.Text = "Menu Management";
-            this.BackColor = Color.FromArgb(245, 240, 235);
+            this.BackColor = Theme.Cream;
+            this.Padding = new Padding(28, 20, 28, 20);
 
             lblTitle = new Label
             {
-                Text = "🍽  Menu Management",
-                Font = new Font("Segoe UI", 14, FontStyle.Bold),
-                ForeColor = Color.FromArgb(101, 67, 33),
+                Text = "Menu",
+                Font = Theme.MakeFont(20, FontStyle.Bold),
+                ForeColor = Theme.TextDark,
                 Dock = DockStyle.Top,
-                Height = 45,
+                Height = 44,
                 TextAlign = ContentAlignment.MiddleLeft,
-                Padding = new Padding(10, 0, 0, 0),
             };
 
             var pnlTop = new Panel
             {
                 Dock = DockStyle.Top,
-                Height = 40,
-                BackColor = Color.FromArgb(245, 240, 235),
-            };
-
-            lblSearch = new Label
-            {
-                Text = "Search:",
-                Font = new Font("Segoe UI", 10),
-                Location = new Point(10, 8),
-                AutoSize = true,
+                Height = 52,
+                BackColor = Theme.Cream,
             };
 
             txtSearch = new TextBox
             {
-                Font = new Font("Segoe UI", 10),
-                Location = new Point(75, 5),
-                Size = new Size(200, 28),
+                Font = Theme.MakeFont(10.5f),
+                Location = new Point(0, 10),
+                Width = 300,
+                BorderStyle = BorderStyle.FixedSingle,
+                PlaceholderText = "Search by name...",
             };
             txtSearch.TextChanged += new EventHandler(txtSearch_TextChanged);
-
-            pnlTop.Controls.AddRange(new Control[] { lblSearch, txtSearch });
+            pnlTop.Controls.Add(txtSearch);
 
             var pnlMain = new Panel
             {
                 Dock = DockStyle.Fill,
+                BackColor = Theme.Cream,
             };
 
             dgvMenu = new DataGridView
@@ -81,175 +76,196 @@
                 ReadOnly = true,
                 AllowUserToAddRows = false,
                 AllowUserToDeleteRows = false,
+                AllowUserToResizeRows = false,
+                MultiSelect = false,
                 BackgroundColor = Color.White,
                 BorderStyle = BorderStyle.None,
                 RowHeadersVisible = false,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
-                Font = new Font("Segoe UI", 9),
+                Font = Theme.MakeFont(10),
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+                EnableHeadersVisualStyles = false,
+                CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal,
+                GridColor = Theme.Border,
+                ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None,
+                ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing,
+                ColumnHeadersHeight = 42,
             };
+            dgvMenu.RowTemplate.Height = 40;
+
             dgvMenu.Columns.Add("Id", "ID");
             dgvMenu.Columns.Add("Name", "Name");
             dgvMenu.Columns.Add("Price", "Price");
             dgvMenu.Columns.Add("Category", "Category");
             dgvMenu.Columns.Add("Available", "Available");
-            dgvMenu.Columns["Id"].Visible = false;
-            dgvMenu.EnableHeadersVisualStyles = false;
-            dgvMenu.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(101, 67, 33);
-            dgvMenu.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dgvMenu.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9, FontStyle.Bold);
-            dgvMenu.CellClick += new DataGridViewCellEventHandler(dgvMenu_CellClick);
 
-            var pnlLeft = new Panel
-            {
-                Dock = DockStyle.Fill,
-            };
+            dgvMenu.Columns["Id"].Visible = false;
+            dgvMenu.Columns["Name"].FillWeight = 40;
+            dgvMenu.Columns["Price"].FillWeight = 22;
+            dgvMenu.Columns["Category"].FillWeight = 22;
+            dgvMenu.Columns["Available"].FillWeight = 16;
+
+            dgvMenu.Columns["Price"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgvMenu.Columns["Price"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+
+            dgvMenu.ColumnHeadersDefaultCellStyle.BackColor = Theme.HeaderBack;
+            dgvMenu.ColumnHeadersDefaultCellStyle.ForeColor = Theme.TextMuted;
+            dgvMenu.ColumnHeadersDefaultCellStyle.SelectionBackColor = Theme.HeaderBack;
+            dgvMenu.ColumnHeadersDefaultCellStyle.SelectionForeColor = Theme.TextMuted;
+            dgvMenu.ColumnHeadersDefaultCellStyle.Font = Theme.MakeFont(9.5f, FontStyle.Bold);
+            dgvMenu.ColumnHeadersDefaultCellStyle.Padding = new Padding(12, 0, 12, 0);
+            dgvMenu.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+
+            dgvMenu.DefaultCellStyle.ForeColor = Theme.TextDark;
+            dgvMenu.DefaultCellStyle.SelectionBackColor = Theme.SelectedRow;
+            dgvMenu.DefaultCellStyle.SelectionForeColor = Theme.TextDark;
+            dgvMenu.DefaultCellStyle.Padding = new Padding(12, 0, 12, 0);
+
+            dgvMenu.CellClick += new DataGridViewCellEventHandler(dgvMenu_CellClick);
 
             var pnlBottom = new Panel
             {
                 Dock = DockStyle.Bottom,
                 Height = 40,
-                BackColor = Color.FromArgb(245, 240, 235),
+                BackColor = Color.White,
             };
 
             lblCount = new Label
             {
-                Text = "Total: 0 items",
-                Font = new Font("Segoe UI", 9),
-                Location = new Point(10, 10),
+                Text = "0 items",
+                Font = Theme.MakeFont(9),
+                ForeColor = Theme.TextMuted,
+                Location = new Point(14, 12),
                 AutoSize = true,
             };
+            pnlBottom.Controls.Add(lblCount);
 
-            btnDelete = new Button
+            var pnlLeft = new Panel
             {
-                Text = "Delete",
-                Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                BackColor = Color.FromArgb(180, 40, 40),
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat,
-                Location = new Point(310, 5),
-                Size = new Size(100, 30),
-                Cursor = Cursors.Hand,
+                Dock = DockStyle.Fill,
+                BackColor = Theme.Border,
+                Padding = new Padding(1),
             };
-            btnDelete.FlatAppearance.BorderSize = 0;
-            btnDelete.Click += new EventHandler(btnDelete_Click);
-
-            pnlBottom.Controls.AddRange(new Control[] { lblCount, btnDelete });
-
             pnlLeft.Controls.Add(dgvMenu);
             pnlLeft.Controls.Add(pnlBottom);
+
+            var spacer = new Panel
+            {
+                Dock = DockStyle.Right,
+                Width = 18,
+                BackColor = Theme.Cream,
+            };
 
             pnlRight = new Panel
             {
                 Dock = DockStyle.Right,
                 Width = 310,
+                BackColor = Theme.Border,
+                Padding = new Padding(1),
+            };
+
+            var pnlForm = new Panel
+            {
+                Dock = DockStyle.Fill,
                 BackColor = Color.White,
-                Padding = new Padding(15),
+            };
+
+            var lblForm = new Label
+            {
+                Text = "Item details",
+                Font = Theme.MakeFont(12, FontStyle.Bold),
+                ForeColor = Theme.TextDark,
+                Location = new Point(24, 20),
+                AutoSize = true,
             };
 
             lblName = new Label
             {
                 Text = "Name",
-                Font = new Font("Segoe UI", 10),
-                Location = new Point(15, 20),
+                Font = Theme.MakeFont(9),
+                ForeColor = Theme.TextMuted,
+                Location = new Point(24, 62),
                 AutoSize = true,
             };
             txtName = new TextBox
             {
-                Font = new Font("Segoe UI", 10),
-                Location = new Point(15, 42),
-                Size = new Size(270, 28),
+                Font = Theme.MakeFont(10.5f),
+                Location = new Point(24, 84),
+                Width = 260,
+                BorderStyle = BorderStyle.FixedSingle,
             };
 
             lblCategory = new Label
             {
                 Text = "Category",
-                Font = new Font("Segoe UI", 10),
-                Location = new Point(15, 82),
+                Font = Theme.MakeFont(9),
+                ForeColor = Theme.TextMuted,
+                Location = new Point(24, 126),
                 AutoSize = true,
             };
             txtCategory = new TextBox
             {
-                Font = new Font("Segoe UI", 10),
-                Location = new Point(15, 104),
-                Size = new Size(270, 28),
+                Font = Theme.MakeFont(10.5f),
+                Location = new Point(24, 148),
+                Width = 260,
+                BorderStyle = BorderStyle.FixedSingle,
             };
 
             lblPrice = new Label
             {
-                Text = "Price",
-                Font = new Font("Segoe UI", 10),
-                Location = new Point(15, 144),
+                Text = "Price (₫)",
+                Font = Theme.MakeFont(9),
+                ForeColor = Theme.TextMuted,
+                Location = new Point(24, 190),
                 AutoSize = true,
             };
             txtPrice = new TextBox
             {
-                Font = new Font("Segoe UI", 10),
-                Location = new Point(15, 166),
-                Size = new Size(270, 28),
+                Font = Theme.MakeFont(10.5f),
+                Location = new Point(24, 212),
+                Width = 260,
+                BorderStyle = BorderStyle.FixedSingle,
             };
 
             chkAvailable = new CheckBox
             {
                 Text = "Available",
-                Font = new Font("Segoe UI", 10),
-                Location = new Point(15, 210),
+                Font = Theme.MakeFont(10),
+                ForeColor = Theme.TextDark,
+                Location = new Point(24, 260),
                 AutoSize = true,
                 Checked = true,
             };
 
-            btnAdd = new Button
-            {
-                Text = "Add",
-                Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                BackColor = Color.FromArgb(101, 67, 33),
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat,
-                Location = new Point(15, 260),
-                Size = new Size(80, 32),
-                Cursor = Cursors.Hand,
-            };
-            btnAdd.FlatAppearance.BorderSize = 0;
+            btnAdd = new Button { Text = "Add", Location = new Point(24, 306), Size = new Size(125, 38) };
+            Theme.Primary(btnAdd);
             btnAdd.Click += new EventHandler(btnAdd_Click);
 
-            btnUpdate = new Button
-            {
-                Text = "Update",
-                Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                BackColor = Color.FromArgb(101, 67, 33),
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat,
-                Location = new Point(105, 260),
-                Size = new Size(80, 32),
-                Cursor = Cursors.Hand,
-            };
-            btnUpdate.FlatAppearance.BorderSize = 0;
+            btnUpdate = new Button { Text = "Update", Location = new Point(159, 306), Size = new Size(125, 38) };
+            Theme.Outline(btnUpdate, Theme.Caramel);
             btnUpdate.Click += new EventHandler(btnUpdate_Click);
 
-            btnClear = new Button
-            {
-                Text = "Clear",
-                Font = new Font("Segoe UI", 10),
-                BackColor = Color.FromArgb(200, 190, 180),
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat,
-                Location = new Point(195, 260),
-                Size = new Size(80, 32),
-                Cursor = Cursors.Hand,
-            };
-            btnClear.FlatAppearance.BorderSize = 0;
+            btnClear = new Button { Text = "Clear", Location = new Point(24, 352), Size = new Size(125, 38) };
+            Theme.Outline(btnClear, Theme.TextMuted);
             btnClear.Click += new EventHandler(btnClear_Click);
 
-            pnlRight.Controls.AddRange(new Control[]
+            btnDelete = new Button { Text = "Delete", Location = new Point(159, 352), Size = new Size(125, 38) };
+            Theme.Outline(btnDelete, Theme.Danger);
+            btnDelete.Click += new EventHandler(btnDelete_Click);
+
+            pnlForm.Controls.AddRange(new Control[]
             {
+                lblForm,
                 lblName,     txtName,
                 lblCategory, txtCategory,
                 lblPrice,    txtPrice,
                 chkAvailable,
-                btnAdd, btnUpdate, btnClear,
+                btnAdd, btnUpdate, btnClear, btnDelete,
             });
+            pnlRight.Controls.Add(pnlForm);
 
             pnlMain.Controls.Add(pnlLeft);
+            pnlMain.Controls.Add(spacer);
             pnlMain.Controls.Add(pnlRight);
 
             this.Controls.Add(pnlMain);
