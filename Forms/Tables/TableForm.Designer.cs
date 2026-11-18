@@ -32,9 +32,6 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             pnlMain = new Panel();
             dgvTable = new DataGridView();
-            TableID = new DataGridViewTextBoxColumn();
-            TableName = new DataGridViewTextBoxColumn();
-            Status = new DataGridViewTextBoxColumn();
             pnlLeft = new Panel();
             btnUpdateTb = new Button();
             btnDeleteTb = new Button();
@@ -51,6 +48,9 @@
             pnlTop = new Panel();
             tbSearch = new TextBox();
             lbSearch = new Label();
+            Id = new DataGridViewTextBoxColumn();
+            TableName = new DataGridViewTextBoxColumn();
+            Status = new DataGridViewTextBoxColumn();
             pnlMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvTable).BeginInit();
             pnlLeft.SuspendLayout();
@@ -81,7 +81,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dgvTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dgvTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvTable.Columns.AddRange(new DataGridViewColumn[] { TableID, TableName, Status });
+            dgvTable.Columns.AddRange(new DataGridViewColumn[] { Id, TableName, Status });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
@@ -100,31 +100,6 @@
             dgvTable.Size = new Size(571, 330);
             dgvTable.TabIndex = 1;
             dgvTable.CellClick += dgvTable_CellClick;
-            // 
-            // TableID
-            // 
-            TableID.DataPropertyName = "Id";
-            TableID.HeaderText = "Table ID";
-            TableID.MinimumWidth = 6;
-            TableID.Name = "TableID";
-            TableID.ReadOnly = true;
-            TableID.Visible = false;
-            // 
-            // TableName
-            // 
-            TableName.DataPropertyName = "TableName";
-            TableName.HeaderText = "Table Name";
-            TableName.MinimumWidth = 6;
-            TableName.Name = "TableName";
-            TableName.ReadOnly = true;
-            // 
-            // Status
-            // 
-            Status.DataPropertyName = "Status";
-            Status.HeaderText = "Status";
-            Status.MinimumWidth = 6;
-            Status.Name = "Status";
-            Status.ReadOnly = true;
             // 
             // pnlLeft
             // 
@@ -305,6 +280,31 @@
             lbSearch.TabIndex = 4;
             lbSearch.Text = "Search:";
             // 
+            // Id
+            // 
+            Id.DataPropertyName = "Id";
+            Id.HeaderText = "Table ID";
+            Id.MinimumWidth = 6;
+            Id.Name = "Id";
+            Id.ReadOnly = true;
+            Id.Visible = false;
+            // 
+            // TableName
+            // 
+            TableName.DataPropertyName = "TableName";
+            TableName.HeaderText = "Table Name";
+            TableName.MinimumWidth = 6;
+            TableName.Name = "TableName";
+            TableName.ReadOnly = true;
+            // 
+            // Status
+            // 
+            Status.DataPropertyName = "Status";
+            Status.HeaderText = "Status";
+            Status.MinimumWidth = 6;
+            Status.Name = "Status";
+            Status.ReadOnly = true;
+            // 
             // TableForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -348,7 +348,7 @@
         private Button btnDeleteTb;
         private Label lbTbCount;
         private DataGridView dgvTable;
-        private DataGridViewTextBoxColumn TableID;
+        private DataGridViewTextBoxColumn Id;
         private DataGridViewTextBoxColumn TableName;
         private DataGridViewTextBoxColumn Status;
     }

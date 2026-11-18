@@ -32,6 +32,7 @@ namespace CafeManagement.Forms.Tables
 
             dgvTable.DataSource = null;
             dgvTable.DataSource = lsTables;
+            dgvTable.Columns["Id"].Visible = false;
 
             lbTbCount.Text = $"Total: {lsTables.Count} table(s)";
 
@@ -115,9 +116,19 @@ namespace CafeManagement.Forms.Tables
                     ToastForm.Warning("Please select a table to delete.");
                     return;
                 }
-                _tableRepo.Delete(tableSelected);
-                ToastForm.Success("Table deleted successfully!");
-                LoadData();
+                var confirm = MessageBox.Show
+                (
+                    "Are you sure you want to delete this table?",
+                    "Confirm Delete",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                );
+                if (confirm == DialogResult.Yes)
+                {
+                    _tableRepo.Delete(tableSelected);
+                    ToastForm.Success("Table deleted successfully!");
+                    LoadData();
+                }
             }
             catch (Exception ex)
             {
