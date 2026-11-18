@@ -90,5 +90,20 @@ namespace CafeManagement.Forms.Tables
             tableSelected = lsTables[e.RowIndex];
             BindData(tableSelected);
         }
+
+        private void btnUpdateTb_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CafeTable table = GetTable();
+                _tableRepo.Update(table);
+                ToastForm.Success("Table updated successfully!");
+                LoadData();
+            }
+            catch (Exception ex)
+            {
+                ToastForm.Error(ex.ToString());
+            }
+        }
     }
 }
