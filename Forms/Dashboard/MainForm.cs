@@ -61,9 +61,17 @@ namespace CafeManagement.Forms.Dashboard
                     break;
 
                 case "statistics":
-                    pnlContent.Controls.Add(MakePlaceholder("Statistics"));
+                    var statisticsForm = new CafeManagement.Forms.Statistics.StatisticsForm
+                    {
+                        TopLevel = false,
+                        FormBorderStyle = FormBorderStyle.None,
+                        Dock = DockStyle.Fill,
+                    };
+                    pnlContent.Controls.Add(statisticsForm);
+                    statisticsForm.Show();
                     SetActiveButton(btnStatistics);
                     break;
+
                 case "users":
                     var userForm = new CafeManagement.Forms.Users.UserForm
                     {
