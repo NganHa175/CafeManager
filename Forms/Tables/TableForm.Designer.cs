@@ -311,6 +311,7 @@
             Controls.Add(pnlTop);
             Name = "TableForm";
             Text = "Table Management";
+            Load += TableForm_Load;
             pnlMain.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvTable).EndInit();
             pnlLeft.ResumeLayout(false);
