@@ -83,5 +83,12 @@ namespace CafeManagement.Forms.Tables
                 ToastForm.Error(ex.ToString());
             }
         }
+
+        private void dgvTable_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            tableSelected = lsTables[e.RowIndex];
+            BindData(tableSelected);
+        }
     }
 }

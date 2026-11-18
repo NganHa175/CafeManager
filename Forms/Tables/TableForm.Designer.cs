@@ -99,6 +99,7 @@
             dgvTable.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvTable.Size = new Size(571, 330);
             dgvTable.TabIndex = 1;
+            dgvTable.CellClick += dgvTable_CellClick;
             // 
             // TableID
             // 
