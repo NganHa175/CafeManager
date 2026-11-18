@@ -29,6 +29,14 @@ namespace CafeManagement.Forms.Tables
         public void LoadData()
         {
             lsTables = _tableRepo.GetAll();
+            if (lsTables != null && lsTables.Count > 0)
+            {
+                int maxID = lsTables.Max(table => table.Id);
+                int nextID = maxID + 1;
+                tbTbID.Text = nextID.ToString();
+            }
+            else
+                tbTbID.Text = "1";
 
             dgvTable.DataSource = null;
             dgvTable.DataSource = lsTables;
@@ -49,7 +57,6 @@ namespace CafeManagement.Forms.Tables
             }
             else
             {
-                tbTbID.Text = "";
                 tbTbName.Text = "";
                 cbbStatus.SelectedIndex = 0;
             }

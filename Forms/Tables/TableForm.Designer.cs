@@ -32,6 +32,9 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             pnlMain = new Panel();
             dgvTable = new DataGridView();
+            Id = new DataGridViewTextBoxColumn();
+            TableName = new DataGridViewTextBoxColumn();
+            Status = new DataGridViewTextBoxColumn();
             pnlLeft = new Panel();
             btnUpdateTb = new Button();
             btnDeleteTb = new Button();
@@ -48,9 +51,6 @@
             pnlTop = new Panel();
             tbSearch = new TextBox();
             lbSearch = new Label();
-            Id = new DataGridViewTextBoxColumn();
-            TableName = new DataGridViewTextBoxColumn();
-            Status = new DataGridViewTextBoxColumn();
             pnlMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvTable).BeginInit();
             pnlLeft.SuspendLayout();
@@ -100,6 +100,31 @@
             dgvTable.Size = new Size(571, 330);
             dgvTable.TabIndex = 1;
             dgvTable.CellClick += dgvTable_CellClick;
+            // 
+            // Id
+            // 
+            Id.DataPropertyName = "Id";
+            Id.HeaderText = "Table ID";
+            Id.MinimumWidth = 6;
+            Id.Name = "Id";
+            Id.ReadOnly = true;
+            Id.Visible = false;
+            // 
+            // TableName
+            // 
+            TableName.DataPropertyName = "TableName";
+            TableName.HeaderText = "Table Name";
+            TableName.MinimumWidth = 6;
+            TableName.Name = "TableName";
+            TableName.ReadOnly = true;
+            // 
+            // Status
+            // 
+            Status.DataPropertyName = "Status";
+            Status.HeaderText = "Status";
+            Status.MinimumWidth = 6;
+            Status.Name = "Status";
+            Status.ReadOnly = true;
             // 
             // pnlLeft
             // 
@@ -212,9 +237,11 @@
             // 
             // tbTbID
             // 
+            tbTbID.Enabled = false;
             tbTbID.Font = new Font("Segoe UI", 10F);
             tbTbID.Location = new Point(14, 40);
             tbTbID.Name = "tbTbID";
+            tbTbID.ReadOnly = true;
             tbTbID.Size = new Size(203, 30);
             tbTbID.TabIndex = 7;
             // 
@@ -279,31 +306,6 @@
             lbSearch.Size = new Size(65, 23);
             lbSearch.TabIndex = 4;
             lbSearch.Text = "Search:";
-            // 
-            // Id
-            // 
-            Id.DataPropertyName = "Id";
-            Id.HeaderText = "Table ID";
-            Id.MinimumWidth = 6;
-            Id.Name = "Id";
-            Id.ReadOnly = true;
-            Id.Visible = false;
-            // 
-            // TableName
-            // 
-            TableName.DataPropertyName = "TableName";
-            TableName.HeaderText = "Table Name";
-            TableName.MinimumWidth = 6;
-            TableName.Name = "TableName";
-            TableName.ReadOnly = true;
-            // 
-            // Status
-            // 
-            Status.DataPropertyName = "Status";
-            Status.HeaderText = "Status";
-            Status.MinimumWidth = 6;
-            Status.Name = "Status";
-            Status.ReadOnly = true;
             // 
             // TableForm
             // 
