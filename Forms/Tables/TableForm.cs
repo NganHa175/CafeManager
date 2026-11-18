@@ -105,5 +105,24 @@ namespace CafeManagement.Forms.Tables
                 ToastForm.Error(ex.ToString());
             }
         }
+
+        private void btnDeleteTb_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (tableSelected == null)
+                {
+                    ToastForm.Warning("Please select a table to delete."); 
+                    return;
+                }
+                _tableRepo.Delete(tableSelected);
+                ToastForm.Success("Table deleted successfully!");
+                LoadData();
+            }
+            catch (Exception ex)
+            {
+                ToastForm.Error(ex.ToString());
+            }
+        }
     }
 }
