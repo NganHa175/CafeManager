@@ -108,6 +108,7 @@
             TableID.MinimumWidth = 6;
             TableID.Name = "TableID";
             TableID.ReadOnly = true;
+            TableID.Visible = false;
             // 
             // TableName
             // 
