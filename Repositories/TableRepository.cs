@@ -53,19 +53,19 @@ namespace CafeManagement.Repositories
             return list;
         }
 
-        public void Add(CafeTable item)
+        public void Add(CafeTable table)
         {
             var cmd = Database.Connection.CreateCommand();
             cmd.CommandText = @"
                 INSERT INTO CafeTables (TableName, Status)
                 VALUES (@tablename, @status)
             ";
-            cmd.Parameters.AddWithValue("@tablename", item.TableName);
-            cmd.Parameters.AddWithValue("@status", item.Status);
+            cmd.Parameters.AddWithValue("@tablename", table.TableName);
+            cmd.Parameters.AddWithValue("@status", table.Status);
             cmd.ExecuteNonQuery();
         }
 
-        public void Update(CafeTable item)
+        public void Update(CafeTable table)
         {
             var cmd = Database.Connection.CreateCommand();
             cmd.CommandText = @"
@@ -74,17 +74,17 @@ namespace CafeManagement.Repositories
                     Status       = @status
                 WHERE Id = @id
             ";
-            cmd.Parameters.AddWithValue("@id", item.Id);
-            cmd.Parameters.AddWithValue("@tablename", item.TableName);
-            cmd.Parameters.AddWithValue("@status", item.Status);
+            cmd.Parameters.AddWithValue("@id", table.Id);
+            cmd.Parameters.AddWithValue("@tablename", table.TableName);
+            cmd.Parameters.AddWithValue("@status", table.Status);
             cmd.ExecuteNonQuery();
         }
 
-        public void Delete(int id)
+        public void Delete(CafeTable table)
         {
             var cmd = Database.Connection.CreateCommand();
             cmd.CommandText = "DELETE FROM CafeTables WHERE Id = @id";
-            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Parameters.AddWithValue("@id", table.Id);
             cmd.ExecuteNonQuery();
         }
     }
