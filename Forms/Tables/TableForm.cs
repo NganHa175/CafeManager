@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace CafeManagement.Forms.Tables
 {
@@ -82,6 +83,8 @@ namespace CafeManagement.Forms.Tables
             try
             {
                 CafeTable table = GetTable();
+                if (!ValidateInput())
+                    return;
                 _tableRepo.Add(table);
                 ToastForm.Success("Table added successfully!");
                 LoadData();
@@ -104,6 +107,8 @@ namespace CafeManagement.Forms.Tables
             try
             {
                 CafeTable table = GetTable();
+                if (!ValidateInput())
+                    return;
                 _tableRepo.Update(table);
                 ToastForm.Success("Table updated successfully!");
                 LoadData();
@@ -161,6 +166,16 @@ namespace CafeManagement.Forms.Tables
 
                 BindData(null);
             }
+        }
+
+        private bool ValidateInput()
+        {
+            if (string.IsNullOrEmpty(tbTbName.Text.Trim()))
+            {
+                ToastForm.Warning("Please enter table name.");
+                return false;
+            }
+            return true;
         }
     }
 }
