@@ -106,6 +106,11 @@ namespace CafeManagement.Forms.Tables
         {
             try
             {
+                if (tableSelected == null)
+                {
+                    ToastForm.Warning("Please select a table to update."); 
+                    return;
+                }
                 CafeTable table = GetTable();
                 if (!ValidateInput())
                     return;
@@ -161,6 +166,8 @@ namespace CafeManagement.Forms.Tables
 
                 dgvTable.DataSource = null;
                 dgvTable.DataSource = lsTables;
+                dgvTable.Columns["Id"].Visible = false;
+
 
                 lbTbCount.Text = $"Total: {lsTables.Count} table(s)";
 
