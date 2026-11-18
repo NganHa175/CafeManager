@@ -112,7 +112,7 @@ namespace CafeManagement.Forms.Tables
             {
                 if (tableSelected == null)
                 {
-                    ToastForm.Warning("Please select a table to delete."); 
+                    ToastForm.Warning("Please select a table to delete.");
                     return;
                 }
                 _tableRepo.Delete(tableSelected);
@@ -122,6 +122,26 @@ namespace CafeManagement.Forms.Tables
             catch (Exception ex)
             {
                 ToastForm.Error(ex.ToString());
+            }
+        }
+
+        private void tbSearch_TextChanged(object sender, EventArgs e)
+        {
+            string keyword = tbSearch.Text.Trim();
+            if (string.IsNullOrEmpty(keyword))
+            {
+                LoadData();
+            }
+            else
+            {
+                lsTables = _tableRepo.Search(keyword);
+
+                dgvTable.DataSource = null;
+                dgvTable.DataSource = lsTables;
+
+                lbTbCount.Text = $"Total: {lsTables.Count} table(s)";
+
+                BindData(null);
             }
         }
     }

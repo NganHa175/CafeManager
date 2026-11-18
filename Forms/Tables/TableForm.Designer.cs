@@ -49,7 +49,7 @@
             lbTbCount = new Label();
             lbTitle = new Label();
             pnlTop = new Panel();
-            textBox1 = new TextBox();
+            tbSearch = new TextBox();
             lbSearch = new Label();
             pnlMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvTable).BeginInit();
@@ -276,7 +276,7 @@
             // 
             // pnlTop
             // 
-            pnlTop.Controls.Add(textBox1);
+            pnlTop.Controls.Add(tbSearch);
             pnlTop.Controls.Add(lbSearch);
             pnlTop.Controls.Add(lbTitle);
             pnlTop.Dock = DockStyle.Top;
@@ -285,13 +285,14 @@
             pnlTop.Size = new Size(800, 80);
             pnlTop.TabIndex = 2;
             // 
-            // textBox1
+            // tbSearch
             // 
-            textBox1.Font = new Font("Segoe UI", 10F);
-            textBox1.Location = new Point(89, 38);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(184, 30);
-            textBox1.TabIndex = 5;
+            tbSearch.Font = new Font("Segoe UI", 10F);
+            tbSearch.Location = new Point(89, 38);
+            tbSearch.Name = "tbSearch";
+            tbSearch.Size = new Size(184, 30);
+            tbSearch.TabIndex = 5;
+            tbSearch.TextChanged += tbSearch_TextChanged;
             // 
             // lbSearch
             // 
@@ -334,7 +335,7 @@
         private Label lbTitle;
         private Panel pnlTop;
         private Label lbSearch;
-        private TextBox textBox1;
+        private TextBox tbSearch;
         private TextBox tbTbID;
         private Label lbTbID;
         private Label lbStatus;
