@@ -102,7 +102,7 @@
             // 
             // TableID
             // 
-            TableID.DataPropertyName = "TableID";
+            TableID.DataPropertyName = "Id";
             TableID.HeaderText = "Table ID";
             TableID.MinimumWidth = 6;
             TableID.Name = "TableID";
@@ -182,6 +182,7 @@
             btnAddTb.TabIndex = 14;
             btnAddTb.Text = "Add";
             btnAddTb.UseVisualStyleBackColor = false;
+            btnAddTb.Click += btnAddTb_Click;
             // 
             // lbStatus
             // 

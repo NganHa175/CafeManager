@@ -1,4 +1,5 @@
-﻿using CafeManagement.Models;
+﻿using CafeManagement.Helpers;
+using CafeManagement.Models;
 using CafeManagement.Repositories;
 using System;
 using System.Collections;
@@ -66,6 +67,21 @@ namespace CafeManagement.Forms.Tables
         {
             cbbStatus.DataSource = lsStatus;
             LoadData();
+        }
+
+        private void btnAddTb_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CafeTable table = GetTable();
+                _tableRepo.Add(table);
+                ToastForm.Success("Table added successfully!");
+                LoadData();
+            }
+            catch (Exception ex)
+            {
+                ToastForm.Error(ex.ToString());
+            }
         }
     }
 }
