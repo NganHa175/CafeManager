@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <Folder Include="Forms\Orders\" />
-    <Folder Include="Forms\Tables\" />
   </ItemGroup>
 
   <ItemGroup>
